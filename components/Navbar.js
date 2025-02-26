@@ -11,42 +11,38 @@ export default function Navbar() {
       position: "fixed", 
       top: 0, 
       width: "100%", 
+      height: "60px", 
       zIndex: 1000, 
-      background: "#0a192f", 
-      padding: "15px 20px", 
+      background: "rgba(10, 25, 47, 0.9)", 
+      backdropFilter: "blur(10px)", 
+      padding: "10px 20px", 
       display: "flex", 
       justifyContent: "space-between", 
-      alignItems: "center" 
+      alignItems: "center",
+      transition: "background 0.3s ease",
+      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)" /* Tambahkan shadow */
     }}>
-      {/* Logo */}
-      <h1 style={{ color: "#64ffda", fontSize: "20px", fontWeight: "bold" }}>My CV</h1>
+      <h1 style={{ color: "#64ffda", fontSize: "20px", fontWeight: "bold" }}>CV</h1>
 
-      {/* Tombol Menu Mobile (Hanya Muncul di Mobile) */}
-      <button 
-        onClick={() => setIsOpen(!isOpen)} 
-        className="menu-button" 
-        style={{ marginRight: "20px" }} // Tambahkan margin kanan agar tidak mepet
-      >
+      <button onClick={() => setIsOpen(!isOpen)} className="menu-button">
         {isOpen ? "✖" : "☰"}
       </button>
 
-      {/* Menu Desktop */}
       <div className="menu-desktop">
-        {["Home", "About", "Skills", "Portfolio", "Services", "Contact"].map((item) => (
+        {["Home", "About", "Skills", "Portfolio", "Services", "Skripsi", "Contact"].map((item) => (
           <Link key={item} href={item === "Home" ? "/" : `/${item.toLowerCase()}`} legacyBehavior>
-            <a style={{ color: "#64ffda", fontSize: "18px", textDecoration: "none", padding: "10px 15px", transition: "0.3s ease-in-out" }}>
+            <a style={{ color: "#64ffda", fontSize: "16px", textDecoration: "none", padding: "10px 15px", transition: "color 0.3s" }}>
               {item}
             </a>
           </Link>
         ))}
       </div>
 
-      {/* Menu Mobile */}
       {isOpen && (
         <div className="menu-mobile">
-          {["Home", "About", "Skills", "Portfolio", "Services", "Contact"].map((item) => (
+          {["Home", "About", "Skills", "Portfolio", "Services", "Skripsi", "Contact"].map((item) => (
             <Link key={item} href={item === "Home" ? "/" : `/${item.toLowerCase()}`} legacyBehavior>
-              <a onClick={() => setIsOpen(false)} style={{ color: "#64ffda", fontSize: "18px", textDecoration: "none", padding: "10px" }}>
+              <a onClick={() => setIsOpen(false)} style={{ color: "#64ffda", fontSize: "18px", textDecoration: "none", padding: "10px", transition: "color 0.3s" }}>
                 {item}
               </a>
             </Link>
@@ -54,39 +50,46 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* CSS untuk Responsif */}
       <style jsx>{`
+        :root {
+          --navbar-height: 60px;
+        }
+
         .menu-desktop {
           display: flex;
           gap: 20px;
         }
+
         .menu-mobile {
           position: absolute;
-          top: 60px;
-          left: 0;
+          top: var(--navbar-height);
+          right: 0;
           width: 100%;
-          background: #0a192f;
+          background: rgba(10, 25, 47, 0.9);
+          backdrop-filter: blur(10px);
           text-align: center;
           display: flex;
           flex-direction: column;
           gap: 10px;
           padding: 20px;
         }
+
         .menu-button {
           background: none;
           border: none;
-          color: #fff;
+          color: #64ffda;
           font-size: 24px;
           cursor: pointer;
-          display: none; /* Sembunyikan di Desktop */
+          margin-right: 10px;
+          display: none;
         }
+
         @media (max-width: 768px) {
           .menu-desktop {
             display: none;
           }
           .menu-button {
-            display: block; /* Tampilkan di Mobile */
-            margin-right: 20px; /* Tambahkan margin agar tidak terlalu ke pinggir */
+            display: block;
           }
         }
       `}</style>
